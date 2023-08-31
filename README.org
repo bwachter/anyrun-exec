@@ -1,0 +1,17 @@
+* anyrun-exec
+
+This is a quick and dirty [[https://github.com/Kirottu/anyrun/][anyrun]] plugin to launch programs from the search path. Note that terminal applications also show up in the list, but will not work (unless you don't care about the output).
+
+This works perfectly fine without a configuration, though search path and number of entries to display can be customised:
+
+#+BEGIN_EXAMPLE
+// <Anyrun config dir>/exec.ron
+Config(
+  path: Some([ "/usr/bin", "/bin" ])
+  max_entries: 5,
+)
+#+END_EXAMPLE
+
+Path is an optional value, and will fall back to the content of the =PATH= environment variable if empty or omitted.
+
+Prebuilt binaries of both anyrun and my plugins are available for opensuse in [[https://build.opensuse.org/project/show/home:bhwachter:desktop][my OBS repository]].
