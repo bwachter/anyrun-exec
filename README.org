@@ -9,9 +9,12 @@ This works perfectly fine without a configuration, though search path and number
 Config(
   path: Some([ "/usr/bin", "/bin" ])
   max_entries: 5,
+  usr_merge: true,
 )
 #+END_EXAMPLE
 
 Path is an optional value, and will fall back to the content of the =PATH= environment variable if empty or omitted.
+
+To control the behaviour for distributions with/without /usr merge usr_merge can be set - when =true= /bin and /sbin are removed from the search path. When =false= the search path is not modified.
 
 Prebuilt binaries of both anyrun and my plugins are available for opensuse in [[https://build.opensuse.org/project/show/home:bhwachter:desktop][my OBS repository]].

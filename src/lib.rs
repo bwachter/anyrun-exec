@@ -9,6 +9,7 @@ use std::{fs, process::Command};
 pub struct Config {
     path: Option<Vec<String>>,
     max_entries: usize,
+    usr_merge: bool,
 }
 
 impl Default for Config {
@@ -16,6 +17,7 @@ impl Default for Config {
         Self {
             path: Option::None,
             max_entries: 5,
+            usr_merge: true,
         }
     }
 }
@@ -109,6 +111,15 @@ fn get_matches(input: RString, state: &State) -> RVec<Match> {
                         env_path.split(':').map(str::to_string).collect();
                     path_vec.sort_unstable();
                     path_vec.dedup();
+
+                    if state.config.usr_merge == true {
+                        if let Some(pos) = path_vec.iter().position(|x| *x == "/bin") {
+                            path_vec.remove(pos);
+                        }
+                        if let Some(pos) = path_vec.iter().position(|x| *x == "/sbin") {
+                            path_vec.remove(pos);
+                        }
+                    }
                     matches = collect_matches(&path_vec, command, arguments);
                 } else {
                     eprintln!("Empty path, exec plugin will not work.");
