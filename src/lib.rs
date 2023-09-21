@@ -105,7 +105,10 @@ fn get_matches(input: RString, state: &State) -> RVec<Match> {
             }
             None => {
                 if let Ok(env_path) = env::var("PATH") {
-                    let path_vec: Vec<String> = env_path.split(':').map(str::to_string).collect();
+                    let mut path_vec: Vec<String> =
+                        env_path.split(':').map(str::to_string).collect();
+                    path_vec.sort_unstable();
+                    path_vec.dedup();
                     matches = collect_matches(&path_vec, command, arguments);
                 } else {
                     eprintln!("Empty path, exec plugin will not work.");
